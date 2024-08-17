@@ -1,0 +1,46 @@
+{
+  "full_name": "Edmund Monahan",
+  "address": {
+    "street": "755 Edna Spur",
+    "city": "Florida"
+  },
+  "vehicles": [
+    {
+      "model": "2",
+      "name": "Toyota Roadster",
+      "manufacturer": "Lamborghini",
+      "type": "Cargo Van"
+    },
+    {
+      "model": "Alpine",
+      "name": "BMW Model 3",
+      "manufacturer": "Maserati",
+      "type": "Crew Cab Pickup"
+    },
+    {
+      "model": "Explorer",
+      "name": "Jeep Volt",
+      "manufacturer": "Lamborghini",
+      "type": "Crew Cab Pickup"
+    }
+  ],
+  "payment_details": [
+    {
+      "iban": "HR4286282329341701453",
+      "credit_card_number": "8699454170567604",
+      "currency": "Danish Krone",
+      "credit_card_cvv": "753"
+    },
+    {
+      "iban": "TR6532729HQDSUUT8JG7ZWXF41",
+      "credit_card_number": "3605846184452422",
+      "currency": "Seychelles Rupee",
+      "credit_card_cvv": "951"
+    }
+  ],
+  "email": "Edmund91@yahoo.com",
+  "phone": "253-835-7495",
+  "uid": "acf8b039-dc52-4e19-9acd-60c8cba5cc5e",
+  "last_updated": "2023-10-18",
+  "created_at": "2024-05-18"
+}

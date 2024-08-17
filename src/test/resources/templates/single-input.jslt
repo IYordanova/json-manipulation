@@ -1,0 +1,34 @@
+let paymentDetails = [for (.payment_details)
+  {
+    "IBAN": .iban,
+    "cardDetails": {
+        "number": .credit_card_number,
+        "CVV": .credit_card_cvv
+    },
+    "currency": .currency
+  }
+]
+let vehicles = [for (.vehicles)
+  {
+    "manufacturer": .manufacturer,
+    "model": .model,
+    "name": .name,
+    "type": .type
+  }
+]
+{
+    "fullName": .full_name,
+    "uid": .uid,
+    "contactDetails": {
+        "address": {
+            "street": .address.street,
+            "city": .address.city
+        },
+        "emailAddress": .email ,
+        "phoneNumber": .phone
+    },
+    "paymentDetails": $paymentDetails,
+    "vehicles": $vehicles,
+    "lastUpdated": .last_updated,
+    "createdAt": .created_at
+}

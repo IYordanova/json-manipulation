@@ -1,0 +1,52 @@
+{
+  "fullName": "Edmund Monahan",
+  "uid": "acf8b039-dc52-4e19-9acd-60c8cba5cc5e",
+  "contactDetails": {
+    "address": {
+      "street": "755 Edna Spur",
+      "city": "Florida"
+    },
+    "emailAddress": "Edmund91@yahoo.com",
+    "phoneNumber": "253-835-7495"
+  },
+  "paymentDetails": [
+    {
+      "IBAN": "HR4286282329341701453",
+      "cardDetails": {
+        "number": "8699454170567604",
+        "CVV": "753"
+      },
+      "currency": "Danish Krone"
+    },
+    {
+      "IBAN": "TR6532729HQDSUUT8JG7ZWXF41",
+      "cardDetails": {
+        "number": "3605846184452422",
+        "CVV": "951"
+      },
+      "currency": "Seychelles Rupee"
+    }
+  ],
+  "vehicles": [
+    {
+      "manufacturer": "Lamborghini",
+      "model": "2",
+      "name": "Toyota Roadster",
+      "type": "Cargo Van"
+    },
+    {
+      "manufacturer": "Maserati",
+      "model": "Alpine",
+      "name": "BMW Model 3",
+      "type": "Crew Cab Pickup"
+    },
+    {
+      "manufacturer": "Lamborghini",
+      "model": "Explorer",
+      "name": "Jeep Volt",
+      "type": "Crew Cab Pickup"
+    }
+  ],
+  "lastUpdated": "2023-10-18",
+  "createdAt": "2024-05-18"
+}

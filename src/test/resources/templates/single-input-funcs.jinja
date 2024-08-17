@@ -1,0 +1,32 @@
+{
+    "fullName": "{{ full_name }}",
+    "uid": "{{ uid }}",
+    "contactDetails": {
+        "address": {
+            "street": "{{ address.street }}",
+            "city": "{{ address.city }}"
+        },
+        "emailAddress": "{{ email }}",
+        "phoneNumber": "{{ phone }}"
+    },
+    "paymentDetails": [
+     {% for details in payment_details %}
+        {
+            "IBAN": "{{ details.iban }}",
+            "cardDetails": {
+                "number": "{{ details.credit_card_number }}",
+                "CVV": "{{ details.credit_card_cvv }}"
+            },
+            "currency": "{{ mapCurrency(details.currency) }}"
+        }{% if not loop.last %},{% endif %}
+     {% endfor %}
+    ],
+    "vehicles": [
+    {% for vehicle in vehicles %}
+       "{{ formatVehicle(vehicle.manufacturer, vehicle.model, vehicle.name, vehicle.type) }}"
+        {% if not loop.last %},{% endif %}
+    {% endfor %}
+    ],
+    "lastUpdated": "{{ timeNow() }}",
+    "createdAt": "{{ created_at }}"
+}

@@ -1,0 +1,42 @@
+{
+    "results": [
+    {% for result in results %}
+    {
+        "fullName": "{{ result.full_name }}",
+        "uid": "{{ result.uid }}",
+        "contactDetails": {
+            "address": {
+                "street": "{{ result.address.street }}",
+                "city": "{{ result.address.city }}"
+            },
+            "emailAddress": "{{ result.email }}",
+            "phoneNumber": "{{ result.phone }}"
+        },
+        "paymentDetails": [
+         {% for details in result.payment_details %}
+            {
+                "IBAN": "{{ details.iban }}",
+                "cardDetails": {
+                    "number": "{{ details.credit_card_number }}",
+                    "CVV": "{{ details.credit_card_cvv }}"
+                },
+                "currency": "{{ details.currency }}"
+            }{% if not loop.last %},{% endif %}
+         {% endfor %}
+        ],
+        "vehicles": [
+        {% for vehicle in result.vehicles %}
+            {
+                "manufacturer": "{{ vehicle.manufacturer }}",
+                "model": "{{ vehicle.model }}",
+                "name": "{{ vehicle.name }}",
+                "type": "{{ vehicle.type }}"
+            }{% if not loop.last %},{% endif %}
+        {% endfor %}
+        ],
+        "lastUpdated": "{{ result.last_updated }}",
+        "createdAt": "{{ result.created_at }}"
+        }{% if not loop.last %},{% endif %}
+    {% endfor %}
+    ]
+}

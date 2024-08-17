@@ -1,0 +1,27 @@
+{
+    "fullName": .full_name,
+    "uid": .uid,
+    "contactDetails": {
+        "address": {
+            "street": .address.street,
+            "city": .address.city
+        },
+        "emailAddress": .email ,
+        "phoneNumber": .phone
+    },
+    "paymentDetails": [for (.payment_details)
+        {
+            "IBAN": .iban,
+            "cardDetails": {
+                "number": .credit_card_number,
+                "CVV": .credit_card_cvv
+            },
+            "currency": mapCurrency(.currency)
+        }
+    ],
+    "vehicles": [for (.vehicles)
+        formatVehicle(.manufacturer, .model, .name, .type)
+    ],
+    "lastUpdated": timeNow(),
+    "createdAt": .created_at
+}
