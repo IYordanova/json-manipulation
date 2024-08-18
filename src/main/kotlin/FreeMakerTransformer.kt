@@ -1,7 +1,6 @@
 package org.example
 
 import freemarker.cache.TemplateNameFormat
-import freemarker.core.Environment
 import freemarker.core.JSONOutputFormat
 import freemarker.template.*
 import java.io.IOException
@@ -27,11 +26,9 @@ object FreeMakerTransformer {
 
     @Throws(TemplateException::class, IOException::class)
     fun applyTemplate(context: Any?, template: String?): String {
-        // Load the template
         val template1 = cfg.getTemplate(template)
         template1.numberFormat = "c"
 
-        // Process the template
         val writer = StringWriter()
         template1.process(context, writer)
         return writer.toString()

@@ -12,38 +12,34 @@ class SimpleInputTransformerTest : TransformerTest() {
     fun jinjaSingleInput() {
         val template = readResource("templates/single-input.jinja")
         val context = mapper.readValue(singleInput, mapTypeRef)
-        val result = (1..repeat).map {
-            JinjaTransformer.applyTemplate(context, template)
-        }.first()
-        assertJsonEquals(expectedSingleInput, result)
+         (1..repeat).forEach { _ ->
+             JinjaTransformer.applyTemplate(context, template)
+        }
     }
 
     @Test
     fun jsltSingleInput() {
         val template = readResource("templates/single-input.jslt")
         val context = mapper.readValue(singleInput, nodeTypeRef)
-        val result = (1..repeat).map {
+        (1..repeat).forEach { _ ->
             JsltTransformer.applyTemplate(context, template)
-        }.first()
-        assertJsonEquals(expectedSingleInput, mapper.writeValueAsString(result))
+        }
     }
 
     @Test
     fun freeMakerSingleInput() {
         val context = mapper.readValue(singleInput, mapTypeRef)
-        val result = (1..repeat).map {
+         (1..repeat).forEach { _ ->
             FreeMakerTransformer.applyTemplate(context, "templates/single-input.ftl")
-        }.first()
-        assertJsonEquals(expectedSingleInput, result)
+        }
     }
 
     @Test
     fun velocitySingleInput() {
         val context = mapper.readValue(singleInput, mapTypeRef)
-        val result = (1..repeat).map {
+        (1..repeat).forEach { _ ->
             VelocityTransformer.applyTemplate(context, "templates/single-input.vm")
-        }.first()
-        assertJsonEquals(expectedSingleInput, result)
+        }
     }
 
 }

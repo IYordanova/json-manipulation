@@ -22,13 +22,10 @@ object VelocityTransformer {
 
     fun applyTemplate(context: Map<String, Any?>, template: String): String {
         val t = velocityEngine.getTemplate(template)
-
         val vContext = VelocityContext(context, defaultContext)
 
         val writer = StringWriter()
-
         t.merge(vContext, writer)
-
         return writer.toString()
     }
 
