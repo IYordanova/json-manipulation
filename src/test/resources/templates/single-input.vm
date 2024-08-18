@@ -10,7 +10,7 @@
         "phoneNumber": "${phone}"
     },
     "paymentDetails": [
-    <#list payment_details as details>
+    #foreach($details in $payment_details)
         {
             "IBAN": "${details.iban}",
             "cardDetails": {
@@ -18,19 +18,19 @@
                 "CVV": "${details.credit_card_cvv}"
             },
             "currency": "${details.currency}"
-        }<#if details_has_next>,</#if>
-    </#list>
+        }#if( $foreach.hasNext ), #end
+    #end
     ],
     "vehicles": [
-<#list vehicles as vehicle >
+    #foreach($vehicle in $vehicles)
     {
         "manufacturer": "${vehicle.manufacturer}",
         "model": "${vehicle.model}",
         "name": "${vehicle.name}",
         "type": "${vehicle.type}"
-    }<#if vehicle_has_next>,</#if>
-</#list>
+    }#if( $foreach.hasNext ), #end
+    #end
      ],
-    "lastUpdated": "${last_updated }",
-    "createdAt": "${created_at }"
+    "lastUpdated": "${last_updated}",
+    "createdAt": "${created_at}"
 }

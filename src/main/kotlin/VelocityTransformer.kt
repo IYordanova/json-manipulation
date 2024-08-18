@@ -1,48 +1,35 @@
 package org.example
 
-import com.hubspot.jinjava.Jinjava
-import com.hubspot.jinjava.lib.fn.ELFunctionDefinition
+import org.apache.velocity.VelocityContext
+import org.apache.velocity.app.VelocityEngine
+import org.apache.velocity.runtime.RuntimeConstants
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+import java.io.StringWriter
 
 
-object JinjaTransformer {
-    private val jinjava = Jinjava()
+object VelocityTransformer {
 
-    private val timeNowFunc =
-        ELFunctionDefinition(
-            "",
-            "timeNow",
-            CustomFunctions::class.java,
-            "timeNow"
-        )
-    private val formatVehicleFunc =
-        ELFunctionDefinition(
-            "",
-            "formatVehicle",
-            CustomFunctions::class.java,
-            "formatVehicle",
-            String::class.java,
-            String::class.java,
-            String::class.java,
-            String::class.java
-        )
-    private val mapCurrencyFunc =
-        ELFunctionDefinition(
-            "",
-            "mapCurrency",
-            CustomFunctions::class.java,
-            "mapCurrency",
-            String::class.java
-        )
-
-
-    init {
-        jinjava.globalContext.registerFunction(timeNowFunc)
-        jinjava.globalContext.registerFunction(mapCurrencyFunc)
-        jinjava.globalContext.registerFunction(formatVehicleFunc)
+    private val velocityEngine = VelocityEngine()
+    private val defaultContext = VelocityContext().apply {
+        put("customFunctions", CustomFunctions::class.java)
     }
 
-    fun applyTemplate(context: Map<String, Any?>, template: String?): String {
-        return jinjava.render(template, context)
+    init {
+        velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath")
+        velocityEngine.setProperty("classpath.resource.loader.class", ClasspathResourceLoader::class.java.name)
+        velocityEngine.init()
+    }
+
+    fun applyTemplate(context: Map<String, Any?>, template: String): String {
+        val t = velocityEngine.getTemplate(template)
+
+        val vContext = VelocityContext(context, defaultContext)
+
+        val writer = StringWriter()
+
+        t.merge(vContext, writer)
+
+        return writer.toString()
     }
 
 }

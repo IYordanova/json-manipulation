@@ -10,23 +10,23 @@
         "phoneNumber": "${phone}"
     },
     "paymentDetails": [
-    <#list payment_details as details>
+    #foreach($details in $payment_details)
         {
             "IBAN": "${details.iban}",
             "cardDetails": {
                 "number": "${details.credit_card_number}",
                 "CVV": "${details.credit_card_cvv}"
             },
-            "currency": "${mapCurrency(details.currency)}"
-        }<#if details_has_next>,</#if>
-    </#list>
+            "currency": "${customFunctions.mapCurrency($details.currency)}"
+        }#if( $foreach.hasNext ), #end
+    #end
     ],
     "vehicles": [
-<#list vehicles as vehicle >
-    "${formatVehicle(vehicle.manufacturer, vehicle.model, vehicle.name, vehicle.type)}"
-    <#if vehicle_has_next>,</#if>
-</#list>
+#foreach($vehicle in $vehicles)
+    "${customFunctions.formatVehicle($vehicle.manufacturer, $vehicle.model, $vehicle.name, $vehicle.type)}"
+    #if( $foreach.hasNext ), #end
+#end
      ],
-    "lastUpdated": "${timeNow() }",
-    "createdAt": "${created_at }"
+    "lastUpdated": "${customFunctions.timeNow()}",
+    "createdAt": "${created_at}"
 }
