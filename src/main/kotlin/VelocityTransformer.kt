@@ -1,5 +1,6 @@
 package org.example
 
+import org.apache.velocity.Template
 import org.apache.velocity.VelocityContext
 import org.apache.velocity.app.VelocityEngine
 import org.apache.velocity.runtime.RuntimeConstants
@@ -20,12 +21,13 @@ object VelocityTransformer {
         velocityEngine.init()
     }
 
-    fun applyTemplate(context: Map<String, Any?>, template: String): String {
-        val t = velocityEngine.getTemplate(template)
+    fun loadTemplate(template: String): Template = velocityEngine.getTemplate(template)
+
+    fun applyTemplate(context: Map<String, Any?>, template: Template): String {
         val vContext = VelocityContext(context, defaultContext)
 
         val writer = StringWriter()
-        t.merge(vContext, writer)
+        template.merge(vContext, writer)
         return writer.toString()
     }
 

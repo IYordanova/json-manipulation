@@ -12,38 +12,28 @@ class CustomFuncsTransformerTest : TransformerTest() {
     fun jinjaSingleInputFuncs() {
         val template = readResource("templates/single-input-funcs.jinja")
         val context = mapper.readValue(singleInput, mapTypeRef)
-        val result = (1..repeat).map {
-            JinjaTransformer.applyTemplate(context, template)
-        }.first()
-        println(result)
+        calcAvgTime { JinjaTransformer.applyTemplate(context, template) }
     }
 
     @Test
     fun jsltSingleInputFuncs() {
         val template = readResource("templates/single-input-funcs.jslt")
         val context = mapper.readValue(singleInput, nodeTypeRef)
-        val result = (1..repeat).map {
-            JsltTransformer.applyTemplate(context, template)
-        }.first()
-        println(result)
+        calcAvgTime { JsltTransformer.applyTemplate(context, template) }
     }
 
     @Test
     fun freeMakerSingleInputFuncs() {
         val context = mapper.readValue(singleInput, mapTypeRef)
-        val result = (1..repeat).map {
-            FreeMakerTransformer.applyTemplate(context, "templates/single-input-funcs.ftl")
-        }.first()
-        println(result)
+        val template = FreeMakerTransformer.loadTemplate("templates/single-input-funcs.ftl")
+        calcAvgTime { FreeMakerTransformer.applyTemplate(context, template) }
     }
 
     @Test
     fun velocitySingleInputFuncs() {
         val context = mapper.readValue(singleInput, mapTypeRef)
-        val result = (1..repeat).map {
-            VelocityTransformer.applyTemplate(context, "templates/single-input-funcs.vm")
-        }.first()
-        println(result)
+        val template = VelocityTransformer.loadTemplate("templates/single-input-funcs.vm")
+        calcAvgTime { VelocityTransformer.applyTemplate(context, template) }
     }
 
 }

@@ -7,7 +7,7 @@ import org.example.Utils.readResource
 import org.example.VelocityTransformer
 import org.junit.jupiter.api.Test
 
-class BigPayloadTransformerTest: TransformerTest() {
+class BigPayloadTransformerTest : TransformerTest() {
 
     @Test
     fun jinjaMultiInput() {
@@ -17,16 +17,20 @@ class BigPayloadTransformerTest: TransformerTest() {
 
         // 100
         context["results"] = (0..100).map { singleResult }
-        (1..repeat).forEach { _ -> JinjaTransformer.applyTemplate(context, template) }
+        println("Size " + mapper.writeValueAsBytes(context).size)
+        calcAvgTime { JinjaTransformer.applyTemplate(context, template) }
         // 1000
         context["results"] = (0..900).map { singleResult }
-        (1..repeat).forEach { _ -> JinjaTransformer.applyTemplate(context, template) }
+        println("Size " + mapper.writeValueAsBytes(context).size)
+        calcAvgTime { JinjaTransformer.applyTemplate(context, template) }
         // 10_000
         context["results"] = (0..9000).map { singleResult }
-        (1..repeat).forEach { _ -> JinjaTransformer.applyTemplate(context, template) }
+        println("Size " + mapper.writeValueAsBytes(context).size)
+        calcAvgTime { JinjaTransformer.applyTemplate(context, template) }
         // 100_000
         context["results"] = (0..60_000).map { singleResult }
-        (1..repeat).forEach { _ -> JinjaTransformer.applyTemplate(context, template) }
+        println("Size " + mapper.writeValueAsBytes(context).size)
+        calcAvgTime { JinjaTransformer.applyTemplate(context, template) }
     }
 
     @Test
@@ -42,16 +46,20 @@ class BigPayloadTransformerTest: TransformerTest() {
 
         // 100
         context.put("results", hundredResults)
-        (1..repeat).forEach { _ -> JsltTransformer.applyTemplate(context, template) }
+        println("Size " + mapper.writeValueAsBytes(context).size)
+        calcAvgTime { JsltTransformer.applyTemplate(context, template) }
         // 1000
         context.put("results", nineHundred)
-        (1..repeat).forEach { _ -> JsltTransformer.applyTemplate(context, template) }
+        println("Size " + mapper.writeValueAsBytes(context).size)
+        calcAvgTime { JsltTransformer.applyTemplate(context, template) }
         // 10_000
         context.put("results", nineThousand)
-        (1..repeat).forEach { _ -> JsltTransformer.applyTemplate(context, template) }
+        println("Size " + mapper.writeValueAsBytes(context).size)
+        calcAvgTime { JsltTransformer.applyTemplate(context, template) }
         // 100_000
         context.put("results", sixtyThousand)
-        (1..repeat).forEach { _ -> JsltTransformer.applyTemplate(context, template) }
+        println("Size " + mapper.writeValueAsBytes(context).size)
+        calcAvgTime { JsltTransformer.applyTemplate(context, template) }
     }
 
     @Test
@@ -59,20 +67,24 @@ class BigPayloadTransformerTest: TransformerTest() {
         val singleResult = mapper.readValue(singleInput, mapTypeRef)
         val context = mutableMapOf<String, Any?>()
         context["results"] = (0..1).map { singleResult }
-        val template = "templates/multi-input.ftl"
+        val template = FreeMakerTransformer.loadTemplate("templates/multi-input.ftl")
 
         // 100
         context["results"] = (0..100).map { singleResult }
-        (1..repeat).forEach { _ -> FreeMakerTransformer.applyTemplate(context, template) }
+        println("Size " + mapper.writeValueAsBytes(context).size)
+        calcAvgTime { FreeMakerTransformer.applyTemplate(context, template) }
         // 1000
         context["results"] = (0..900).map { singleResult }
-        (1..repeat).forEach { _ -> FreeMakerTransformer.applyTemplate(context, template) }
+        println("Size " + mapper.writeValueAsBytes(context).size)
+        calcAvgTime { FreeMakerTransformer.applyTemplate(context, template) }
         // 10_000
         context["results"] = (0..9000).map { singleResult }
-        (1..repeat).forEach { _ -> FreeMakerTransformer.applyTemplate(context, template) }
+        println("Size " + mapper.writeValueAsBytes(context).size)
+        calcAvgTime { FreeMakerTransformer.applyTemplate(context, template) }
         // 100_000
         context["results"] = (0..60_000).map { singleResult }
-        (1..repeat).forEach { _ -> FreeMakerTransformer.applyTemplate(context, template) }
+        println("Size " + mapper.writeValueAsBytes(context).size)
+        calcAvgTime { FreeMakerTransformer.applyTemplate(context, template) }
     }
 
     @Test
@@ -80,20 +92,24 @@ class BigPayloadTransformerTest: TransformerTest() {
         val singleResult = mapper.readValue(singleInput, mapTypeRef)
         val context = mutableMapOf<String, Any?>()
         context["results"] = (0..1).map { singleResult }
-        val template = "templates/multi-input.vm"
+        val template = VelocityTransformer.loadTemplate("templates/multi-input.vm")
 
         // 100
         context["results"] = (0..100).map { singleResult }
-        (1..repeat).forEach { _ -> VelocityTransformer.applyTemplate(context, template) }
+        println("Size " + mapper.writeValueAsBytes(context).size)
+        calcAvgTime { VelocityTransformer.applyTemplate(context, template) }
         // 1000
         context["results"] = (0..900).map { singleResult }
-        (1..repeat).forEach { _ -> VelocityTransformer.applyTemplate(context, template) }
+        println("Size " + mapper.writeValueAsBytes(context).size)
+        calcAvgTime { VelocityTransformer.applyTemplate(context, template) }
         // 10_000
         context["results"] = (0..9000).map { singleResult }
-        (1..repeat).forEach { _ -> VelocityTransformer.applyTemplate(context, template) }
+        println("Size " + mapper.writeValueAsBytes(context).size)
+        calcAvgTime { VelocityTransformer.applyTemplate(context, template) }
         // 100_000
         context["results"] = (0..60_000).map { singleResult }
-        (1..repeat).forEach { _ -> VelocityTransformer.applyTemplate(context, template) }
+        println("Size " + mapper.writeValueAsBytes(context).size)
+        calcAvgTime { VelocityTransformer.applyTemplate(context, template) }
     }
 
 }

@@ -3,7 +3,6 @@ package org.example
 import freemarker.cache.TemplateNameFormat
 import freemarker.core.JSONOutputFormat
 import freemarker.template.*
-import java.io.IOException
 import java.io.StringWriter
 
 
@@ -24,13 +23,15 @@ object FreeMakerTransformer {
         cfg.setSharedVariable("mapCurrency", MapCurrency2())
     }
 
-    @Throws(TemplateException::class, IOException::class)
-    fun applyTemplate(context: Any?, template: String?): String {
-        val template1 = cfg.getTemplate(template)
-        template1.numberFormat = "c"
+    fun loadTemplate(template: String): Template {
+        val t = cfg.getTemplate(template)
+        t.numberFormat = "c"
+        return t
+    }
 
+    fun applyTemplate(context: Any?, template: Template): String {
         val writer = StringWriter()
-        template1.process(context, writer)
+        template.process(context, writer)
         return writer.toString()
     }
 }

@@ -1,9 +1,8 @@
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.ArrayNode
-import org.example.Utils.mapper
 import org.example.Utils.readResource
-import org.junit.jupiter.api.Assertions.assertEquals
+import java.util.function.Supplier
 
 abstract class TransformerTest {
     protected val singleInput = readResource("examples/single-input.json")
@@ -12,12 +11,16 @@ abstract class TransformerTest {
     protected val arrNodeTypeRef = object : TypeReference<ArrayNode>() {}
     protected val nodeTypeRef = object : TypeReference<JsonNode>() {}
 
-    protected val repeat = 500;
+    private val repeat = 100
 
-    protected fun assertJsonEquals(expected: String, actual: String) {
-        assertEquals(
-            mapper.readValue(expected, mapTypeRef),
-            mapper.readValue(actual, mapTypeRef)
-        )
+    protected fun calcAvgTime(func: Supplier<Any>) {
+        val times = mutableListOf<Long>()
+        (1..repeat).forEach { _ ->
+            val start = System.nanoTime()
+            func.get()
+            times.add(System.nanoTime() - start)
+        }
+        println(times)
+        println("Avg time: ${times.average() / 1000000}, ${times.min() / 1000000}, ${times.max() / 1000000}")
     }
 }
